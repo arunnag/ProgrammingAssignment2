@@ -1,7 +1,12 @@
 ## Put comments here that give an overall description of what your
 ## functions do
 
-## Write a short comment describing this function
+## makeCacheMatrix(x) creates and returns a cacheable matrix object
+## implements get(), set(x) , getInv(), setInv(inverse)
+## set(x) set updated the new matrix and cleares the cached matrix inverse so that it is recomputed for the new matrix
+## get(x) gets the cahced matrix
+## getInv() gets the cached inverse for the matrix and NULL when it is not computed yet
+## setInv(inverse) cahces the computed inverse
 
 makeCacheMatrix <- function(x = matrix()) {
         inv <- NULL
@@ -26,18 +31,20 @@ makeCacheMatrix <- function(x = matrix()) {
         list(set = set, get = get, getInv = getInv, setInv = setInv)
 }
 
-
-## Write a short comment describing this function
+## cacheSolve(x) takes a cacheable matrix object and computes/returns it's inverse
+## if the inverse is not computed yet(getInv() returns NULL) it computes the inverse and caches it in cacheable matrix object
+## if the inverse is computed already it returns the cahced inverse
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
         inv <- x$getInv()
 
         if (!is.null(inv)) {
-                #message("retriving cached data")
+                #message("Retriving cached inverse")
                 return (inv)
         }
-        #print("computing inv")
+
+        #message("Computing inverse and caching it")
         # null implies that inverse is not computed/invalid for this matrix
         mat <- x$get()
         inv <- solve(mat)
